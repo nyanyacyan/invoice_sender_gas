@@ -20,6 +20,7 @@ function createInvoicePdf(originalSheetName, customerName, priceNoTax) {
   const tempSheet = templateSheet.copyTo(ss);
   tempSheet.setName(`temp_${Date.now()}`);
 
+  
   // 差し込み（例：宛名→B2、金額→B4）
   tempSheet.getRange("B2").setValue(customerName);
   tempSheet.getRange("B4").setValue(priceNoTax);
