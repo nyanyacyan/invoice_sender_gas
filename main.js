@@ -36,9 +36,9 @@ function main() {
     });
 
     // 変数に格納
-    const status = rowDict["ステータス"];
-    const customerName = rowDict["宛名"];
-    const roomId = rowDict["ルームID"];
+    const status = rowDict[`${SHEET_COL_STRINGS.STATUS}`];
+    const customerName = rowDict[`${SHEET_COL_STRINGS.CUSTOMER_NAME}`];
+    const roomId = rowDict[`${SHEET_COL_STRINGS.ROOM_ID}`];
     const priceNoTax = rowDict[priceColName];
     const sendBool = rowDict[invoiceColName];
 
@@ -47,6 +47,8 @@ function main() {
     Logger.log(`roomId: ${roomId}`);
     Logger.log(`priceNoTax: ${priceNoTax}`);
     Logger.log(`sendBool: ${sendBool}`);
+
+    // TODO 属性を取得→個人かどうか
 
     // ステータスが「請求書欄のステータスがTRUE」または「終了」の場合はスキップ
     if (sendBool !== true || status === `${STRINGS.FALSE_STATUS}`) {
@@ -60,6 +62,8 @@ function main() {
       Logger.log(`請求書PDFを生成完了: ${customerName} - ${priceNoTax}`);
 
       const msg = `[info]${STRINGS.INVOICE_TITLE}[title][/title]${STRINGS.INVOICE_MESSAGE}[/info]`;
+
+      // TODO 属性を取得→個人かどうかをfileNameに反映
       const fileName = `${customerName}.pdf`;
       Logger.log(`送信メッセージ: ${msg}`);
       Logger.log(`ファイル名: ${fileName}`);

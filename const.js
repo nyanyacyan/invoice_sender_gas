@@ -16,3 +16,11 @@ const TAIL_STRINGS = {
   SHEET_TEMPLATE: 'template',
   MONTH_FORMAT: 'YYYY-MM',
 };
+
+const SHEET_COL_STRINGS = {
+  STATUS: 'ステータス',
+  CUSTOMER_NAME: '宛名',
+  ROOM_ID: 'ルームID',
+  PRICE: '金額',
+  INVOICE: '請求書',
+};
