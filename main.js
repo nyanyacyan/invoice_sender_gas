@@ -14,12 +14,12 @@ function main() {
   const month = String(today.getMonth() + 1).padStart(2, '0'); // 0始まりなので+1
   const yearMonthKey = `${year}-${month}`; // 例: "2024-05"
 
-
   const priceColName = `${yearMonthKey}${TAIL_STRINGS.PRICE}`;
   const invoiceColName = `${yearMonthKey}${TAIL_STRINGS.INVOICE}`;
   Logger.log(`priceColName: ${priceColName}`);
   Logger.log(`invoiceColName: ${invoiceColName}`);
 
+  // ヘッダー行をリストとして取得
   const col_list = data[0]; // ヘッダー行（1行目）
   Logger.log(`col_list: ${col_list}`);
 
