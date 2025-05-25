@@ -12,7 +12,7 @@ function main() {
   const today = new Date();  // 今日の日付を取得
   const year = today.getFullYear();  // 年を取得
   const month = String(today.getMonth() + 1).padStart(2, '0'); // 0始まりなので+1
-  const yearMonthKey = `${year}-${month}`; // 例: "2024-05"
+  const yearMonthKey = `${year}_${month}`; // 例: "2024-05"
 
   const priceColName = `${yearMonthKey}${TAIL_STRINGS.PRICE}`;
   const invoiceColName = `${yearMonthKey}${TAIL_STRINGS.INVOICE}`;
@@ -38,30 +38,38 @@ function main() {
     // 変数に格納
     const status = rowDict[`${SHEET_COL_STRINGS.STATUS}`];
     const customerName = rowDict[`${SHEET_COL_STRINGS.CUSTOMER_NAME}`];
+    const chatworkBool = rowDict[`${SHEET_COL_STRINGS.CHATWORK_BOOl}`]; // チャットワーク送信の有無
     const roomId = rowDict[`${SHEET_COL_STRINGS.ROOM_ID}`];
     const priceNoTax = rowDict[priceColName];
     const sendBool = rowDict[invoiceColName];
 
     Logger.log(`status: ${status}`)
     Logger.log(`customerName: ${customerName}`);
+    Logger.log(`chatworkBool: ${chatworkBool}`);
     Logger.log(`roomId: ${roomId}`);
     Logger.log(`priceNoTax: ${priceNoTax}`);
     Logger.log(`sendBool: ${sendBool}`);
 
     // TODO 属性を取得→個人かどうか
+    type = rowDict[`${SHEET_COL_STRINGS.INVOICE_TYPE}`]; // 請求先種別
+    const suffix = type === "個人" ? "様" : "御中"; // 個人なら様、それ以外なら御中
+    const fullName = `  ${customerName} ${suffix}`; // 宛名にsuffixを追加
+    Logger.log(`fullName: ${fullName}`);
+    Logger.log(`sendBool: ${sendBool}, status: ${status}, chatworkBool: ${chatworkBool}`);
 
     // ステータスが「請求書欄のステータスがTRUE」または「終了」の場合はスキップ
-    if (sendBool !== true || status === `${STRINGS.FALSE_STATUS}`) {
+    if (sendBool === true || status === `${STRINGS.FALSE_STATUS}`|| chatworkBool === false) {
+      Logger.log(`スキップ: ${customerName} - ステータス: ${status}, 請求書欄: ${sendBool}, チャットワーク送信: ${chatworkBool}`);
       continue; // 送信対象外
     }
 
     try {
       Logger.log(`請求書PDFを生成開始: ${customerName} - ${priceNoTax}`);
       // 請求書PDFを生成
-      const blob = createInvoicePdf(customerName, priceNoTax);
+      const blob = createInvoicePdf({customerName: fullName, priceNoTax: priceNoTax});
       Logger.log(`請求書PDFを生成完了: ${customerName} - ${priceNoTax}`);
 
-      const msg = `[info]${STRINGS.INVOICE_TITLE}[title][/title]${STRINGS.INVOICE_MESSAGE}[/info]`;
+      const msg = `[info][title]${STRINGS.INVOICE_TITLE}[/title]${STRINGS.INVOICE_MESSAGE}[/info]`;
 
       // TODO 属性を取得→個人かどうかをfileNameに反映
       const fileName = `${customerName}.pdf`;
@@ -74,12 +82,8 @@ function main() {
       // 請求書column部分をTrueに更新
       sheet.getRange(i + 1, col_list.indexOf(invoiceColName) + 1).setValue(true); // invoiceColNameの列をTrueに更新
       Logger.log(`請求書columnを更新: ${customerName} - ${priceNoTax}`);
-
-      // ステータス列を更新
-      sheet.getRange(i + 1, 5).setValue("済"); // E列に「済」
     } catch (e) {
       Logger.log(`エラー（${customerName}）：${e}`);
-      sheet.getRange(i + 1, 5).setValue("失敗");
     }
   }
 }

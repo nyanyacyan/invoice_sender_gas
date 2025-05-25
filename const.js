@@ -3,7 +3,7 @@ const STRINGS = {
   INVOICE_MESSAGE: 'ご確認をお願いいたします。',
   DEFAULT_FILE_PREFIX: '請求書_',
   SHEET_MASTER_DATA: 'マスターデータ',
-  SHEET_TEMPLATE: 'template',
+  SHEET_TEMPLATE_NAME: '請求書テンプレ',
   MONTH_FORMAT: 'YYYY-MM',
   FALSE_STATUS: `終了`,
 };
@@ -21,6 +21,6 @@ const SHEET_COL_STRINGS = {
   STATUS: 'ステータス',
   CUSTOMER_NAME: '宛名',
   ROOM_ID: 'ルームID',
-  PRICE: '金額',
-  INVOICE: '請求書',
+  CHATWORK_BOOl: 'Chatwork実施',
+  INVOICE_TYPE: '請求先種別',
 };
