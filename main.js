@@ -42,6 +42,7 @@ function main() {
     const roomId = rowDict[`${SHEET_COL_STRINGS.ROOM_ID}`];
     const priceNoTax = rowDict[priceColName];
     const sendBool = rowDict[invoiceColName];
+    const fileName = rowDict[`${SHEET_COL_STRINGS.FILE_NAME}`]; // ファイル名
 
     Logger.log(`status: ${status}`)
     Logger.log(`customerName: ${customerName}`);
@@ -50,7 +51,7 @@ function main() {
     Logger.log(`priceNoTax: ${priceNoTax}`);
     Logger.log(`sendBool: ${sendBool}`);
 
-    // TODO 属性を取得→個人かどうか
+    // 属性を取得→個人かどうか
     type = rowDict[`${SHEET_COL_STRINGS.INVOICE_TYPE}`]; // 請求先種別
     const suffix = type === "個人" ? "様" : "御中"; // 個人なら様、それ以外なら御中
     const fullName = `  ${customerName} ${suffix}`; // 宛名にsuffixを追加
@@ -71,13 +72,13 @@ function main() {
 
       const msg = `[info][title]${STRINGS.INVOICE_TITLE}[/title]${STRINGS.INVOICE_MESSAGE}[/info]`;
 
-      // TODO 属性を取得→個人かどうかをfileNameに反映
-      const fileName = `${customerName}.pdf`;
+      // 属性を取得→個人かどうかをfileNameに反映
+      const fileFullName = `${fileName}_${year}_${month}.pdf`;
       Logger.log(`送信メッセージ: ${msg}`);
-      Logger.log(`ファイル名: ${fileName}`);
+      Logger.log(`ファイル名: ${fileFullName}`);
 
       // ChatworkでPDFを送信
-      sendPdfToChatwork(blob, roomId, msg, fileName);
+      sendPdfToChatwork(blob, roomId, msg, fileFullName);
 
       // 請求書column部分をTrueに更新
       sheet.getRange(i + 1, col_list.indexOf(invoiceColName) + 1).setValue(true); // invoiceColNameの列をTrueに更新

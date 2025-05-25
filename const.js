@@ -23,4 +23,5 @@ const SHEET_COL_STRINGS = {
   ROOM_ID: 'ルームID',
   CHATWORK_BOOl: 'Chatwork実施',
   INVOICE_TYPE: '請求先種別',
+  FILE_NAME: 'ファイル名',
 };

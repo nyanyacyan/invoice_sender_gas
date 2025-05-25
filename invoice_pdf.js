@@ -26,8 +26,8 @@ function createInvoicePdf({customerName, priceNoTax}) {
   copySheet.setName(`temp_${Date.now()}`);
 
   // 差し込み（例：宛名→B2、金額→B4）
-  copySheet.getRange("A9").setValue(customerName);
-  copySheet.getRange("D18").setValue(priceNoTax);
+  copySheet.getRange("A9").setValue(customerName).setFontFamily("Arial");
+  copySheet.getRange("D18").setValue(priceNoTax).setFontFamily("Arial");
 
   SpreadsheetApp.flush(); //! ここまでのものをスプシに反映
 
