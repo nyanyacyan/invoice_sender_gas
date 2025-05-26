@@ -1,6 +1,6 @@
 const STRINGS = {
-  INVOICE_TITLE: '請求書を送付します',
-  INVOICE_MESSAGE: 'ご確認をお願いいたします。',
+  INVOICE_TITLE: '請求書送付',
+  INVOICE_MESSAGE: '先月分のメンター代に関するご請求書をお送りいたします。\nお忙しいところ恐れ入りますが、ご確認のうえご対応のほどよろしくお願い申し上げます。\n何卒よろしくお願いいたします。',
   DEFAULT_FILE_PREFIX: '請求書_',
   SHEET_MASTER_DATA: 'マスターデータ',
   SHEET_TEMPLATE_NAME: '請求書テンプレ',
