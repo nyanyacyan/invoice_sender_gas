@@ -15,6 +15,7 @@ const TAIL_STRINGS = {
   SHEET_MASTER_DATA: 'マスターデータ',
   SHEET_TEMPLATE: 'template',
   MONTH_FORMAT: 'YYYY-MM',
+  POINT: '_リベP'
 };
 
 const SHEET_COL_STRINGS = {
@@ -24,4 +25,5 @@ const SHEET_COL_STRINGS = {
   CHATWORK_BOOl: 'Chatwork実施',
   INVOICE_TYPE: '請求先種別',
   FILE_NAME: 'ファイル名',
+
 };

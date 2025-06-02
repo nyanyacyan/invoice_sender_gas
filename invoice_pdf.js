@@ -8,7 +8,7 @@
  */
 
 
-function createInvoicePdf({customerName, priceNoTax}) {
+function createInvoicePdf({customerName, priceNoTax, point}) {
 
   // 結びつけがされているスプシを読み込む
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -28,7 +28,8 @@ function createInvoicePdf({customerName, priceNoTax}) {
   // 差し込み（例：宛名→B2、金額→B4）
   copySheet.getRange("A9").setValue(customerName).setFontFamily("Arial");
   copySheet.getRange("D18").setValue(priceNoTax).setFontFamily("Arial");
-
+  copySheet.getRange("F31").setValue(point).setFontFamily("Arial");
+  
   SpreadsheetApp.flush(); //! ここまでのものをスプシに反映
 
   const sheetId = copySheet.getSheetId();

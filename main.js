@@ -16,8 +16,10 @@ function main() {
 
   const priceColName = `${yearMonthKey}${TAIL_STRINGS.PRICE}`;
   const invoiceColName = `${yearMonthKey}${TAIL_STRINGS.INVOICE}`;
+  const pointColName = `${yearMonthKey}${TAIL_STRINGS.POINT}`;
   Logger.log(`priceColName: ${priceColName}`);
   Logger.log(`invoiceColName: ${invoiceColName}`);
+  Logger.log(`invoiceColName: ${pointColName}`);
 
   // ヘッダー行をリストとして取得
   const col_list = data[0]; // ヘッダー行（1行目）
@@ -43,6 +45,7 @@ function main() {
     const priceNoTax = rowDict[priceColName];
     const sendBool = rowDict[invoiceColName];
     const fileName = rowDict[`${SHEET_COL_STRINGS.FILE_NAME}`]; // ファイル名
+    const point = rowDict[pointColName]
 
     Logger.log(`status: ${status}`)
     Logger.log(`customerName: ${customerName}`);
@@ -56,7 +59,7 @@ function main() {
     const suffix = type === "個人" ? "様" : "御中"; // 個人なら様、それ以外なら御中
     const fullName = `  ${customerName} ${suffix}`; // 宛名にsuffixを追加
     Logger.log(`fullName: ${fullName}`);
-    Logger.log(`sendBool: ${sendBool}, status: ${status}, chatworkBool: ${chatworkBool}`);
+    Logger.log(`sendBool: ${sendBool}, status: ${status}, chatworkBool: ${chatworkBool}, point: ${point}`);
 
     // ステータスが「請求書欄のステータスがTRUE」または「終了」の場合はスキップ
     if (sendBool === true || status === `${STRINGS.FALSE_STATUS}`|| chatworkBool === false) {
@@ -67,7 +70,7 @@ function main() {
     try {
       Logger.log(`請求書PDFを生成開始: ${customerName} - ${priceNoTax}`);
       // 請求書PDFを生成
-      const blob = createInvoicePdf({customerName: fullName, priceNoTax: priceNoTax});
+      const blob = createInvoicePdf({customerName: fullName, priceNoTax: priceNoTax, point: point});
       Logger.log(`請求書PDFを生成完了: ${customerName} - ${priceNoTax}`);
 
       const msg = `[info][title]${STRINGS.INVOICE_TITLE}[/title]${STRINGS.INVOICE_MESSAGE}[/info]`;

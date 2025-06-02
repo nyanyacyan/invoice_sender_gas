@@ -11,6 +11,7 @@ function sendPdfToChatwork(blob, roomId, msg, fileName) {
   const config = getConfig();  // ← config.gs から取得
   const token = config.chatworkApiKey;
   const url = `https://api.chatwork.com/v2/rooms/${roomId}/files`;  // エンドポイント
+  
 
   // send data
   const formData = {
@@ -33,7 +34,8 @@ function sendPdfToChatwork(blob, roomId, msg, fileName) {
   Logger.log("blob type: " + blob.getContentType());
   Logger.log("blob name: " + blob.getName());
   Logger.log("blob size (bytes): " + blob.getBytes().length);
-
+  Logger.info("endPointUrl: " + url)
+  
   // 送信を実行
   try {
     const response = UrlFetchApp.fetch(url, options);   // リクエストを飛ばすメソッド
