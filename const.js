@@ -6,6 +6,8 @@ const STRINGS = {
   SHEET_TEMPLATE_NAME: '請求書テンプレ',
   MONTH_FORMAT: 'YYYY-MM',
   FALSE_STATUS: `終了`,
+  POINT_MSG_TITLE: '今月のリベポイント利用について',
+  POINT_SEND_MSG: '今月分の請求に対してご利用される「リベポイント」がございましたら下記のURLよりご利用されるポイントを対象の月にご入力ください\n\nよろしくお願いします。\n\n',
 };
 
 const TAIL_STRINGS = {
@@ -25,5 +27,5 @@ const SHEET_COL_STRINGS = {
   CHATWORK_BOOl: 'Chatwork実施',
   INVOICE_TYPE: '請求先種別',
   FILE_NAME: 'ファイル名',
-
+  GSS_URL: '対象スプシURL',
 };

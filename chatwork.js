@@ -7,6 +7,37 @@
  * @param {string} fileName - ファイル名（.pdfを含む）
  */
 
+function sendMessageToChatwork(roomId, msg) {
+  const config = getConfig();  // ← config.gs から取得
+  const token = config.chatworkApiKey;
+  const url = `https://api.chatwork.com/v2/rooms/${roomId}/messages`;
+
+  const payload = {
+    body: msg
+  };
+
+  const options = {
+    method: "post",
+    headers: {
+      "X-ChatWorkToken": token
+    },
+    payload: payload
+  };
+
+  Logger.log("roomId: " + roomId);
+  Logger.log("msg: " + msg);
+  Logger.info("endPointUrl: " + url);
+
+  try {
+    const response = UrlFetchApp.fetch(url, options);
+    Logger.log("メッセージ送信完了: " + response.getContentText());
+  } catch (e) {
+    Logger.log("メッセージ送信エラー: " + e);
+    throw new Error("Chatworkへのメッセージ送信に失敗しました。");
+  }
+}
+
+
 function sendPdfToChatwork(blob, roomId, msg, fileName) {
   const config = getConfig();  // ← config.gs から取得
   const token = config.chatworkApiKey;
