@@ -1,4 +1,4 @@
-function mainPointSendMsg() {
+function main_three_days_notify() {
   // スプシを開く
   const ss = SpreadsheetApp.getActiveSpreadsheet();
 
@@ -25,29 +25,30 @@ function mainPointSendMsg() {
     });
 
     // 変数に格納
+    const status = rowDict[`${SHEET_COL_STRINGS.STATUS}`];
     const three_days_ago = new Date(rowDict[`${THREE_DAYS_STRINGS.COL_NAME}`]);
-    const send_msg = rowDict[`${THREE_DAYS_STRINGS.MSG}`];
-    const title = rowDict[`${THREE_DAYS_STRINGS.TITLE}`];
-    const roomId = rowDict[`${SHEET_COL_STRINGS.ROOM_ID}`]; // チャットワーク送信の有無
-    const gssUrl = rowDict[`${SHEET_COL_STRINGS.GSS_URL}`]; // ファイル名
+    const chatworkBool = rowDict[`${SHEET_COL_STRINGS.CHATWORK_BOOl}`]; // チャットワーク送信の有無
+    const roomId = rowDict[`${SHEET_COL_STRINGS.ROOM_ID}`]; // ルームID
+    // const gssUrl = rowDict[`${SHEET_COL_STRINGS.GSS_URL}`]; // ファイル名
 
     // 今日の日付のみ定義
     const today = new Date();
 
+    Logger.log(`status: ${status}`)
     Logger.log(`3日前の日付: ${three_days_ago}`)
-    Logger.log(`msg: ${msg}`);
-    Logger.log(`title: ${title}`);
-    Logger.log(`gssUrl: ${gssUrl}`);
+    Logger.log(`chatworkBool: ${chatworkBool}`);
+    Logger.log(`roomId: ${roomId}`);
+    // Logger.log(`gssUrl: ${gssUrl}`);
 
     // ステータスが「請求書欄のステータスがTRUE」または「終了」の場合はスキップ
-    if (!isSameDate(three_days_ago, today)) {
+    if (!isSameDate(three_days_ago, today) || status === `${STRINGS.FALSE_STATUS}` || chatworkBool === false) {
       Logger.log(`スキップ: ${three_days_ago} - 今日の日付: ${today}`);
       continue; // 送信対象外
     }
 
     try {
 
-      const msg = `[info][title]${title}[/title]${send_msg}${gssUrl}[/info]`;
+      const msg = `[info][title]${THREE_DAYS_STRINGS.TITLE}[/title]${THREE_DAYS_STRINGS.MSG}[/info]`;
 
       Logger.log(`送信メッセージ: ${msg}`);
 
