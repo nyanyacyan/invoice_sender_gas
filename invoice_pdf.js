@@ -29,7 +29,7 @@ function createInvoicePdf({customerName, priceNoTax, point}) {
   copySheet.getRange("A9").setValue(customerName).setFontFamily("Arial");
   copySheet.getRange("D18").setValue(priceNoTax).setFontFamily("Arial");
   copySheet.getRange("F31").setValue(point).setFontFamily("Arial");
-  
+
   SpreadsheetApp.flush(); //! ここまでのものをスプシに反映
 
   const sheetId = copySheet.getSheetId();
