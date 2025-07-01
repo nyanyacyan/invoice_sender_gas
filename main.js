@@ -11,7 +11,7 @@ function main() {
   // 年と月、表記を定義
   const today = new Date();  // 今日の日付を取得
   const year = today.getFullYear();  // 年を取得
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // 0始まりなので+1
+  const month = String(today.getMonth() ).padStart(2, '0'); // 0始まりなので+1
   const yearMonthKey = `${year}_${month}`; // 例: "2024-05"
 
   const priceColName = `${yearMonthKey}${TAIL_STRINGS.PRICE}`;
